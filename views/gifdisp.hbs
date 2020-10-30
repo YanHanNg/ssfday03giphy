@@ -1,6 +1,12 @@
-<h1>The URL is {{url}} </h1>
-{{#each gif}}
-    <div class="row">
-        <img src="{{this}}" alt="gif">
-    </div> 
-{{/each}}
+<h1>Your Search of {{search}} </h1>
+
+{{#if hasContent}}
+    {{#each gif}}
+        <div class="row">
+            <h6>{{this.title}}</h6>
+            <img src="{{this.imageUrl}}" alt="gif">
+        </div> 
+    {{/each}}
+{{else}}
+    <h3>Your Search Result Return no result</h3>
+{{/if}}

@@ -29,19 +29,33 @@ app.get('/searchGIF', async (req, res) => {
     let fetchResult = await fetch(url);
     let data = await fetchResult.json();
 
-    console.log(data);
-
-    let x = data.data;
     let arrayGif = [];
 
-    for(a in x)
+    //Using Mapping
+    const img = data.data.filter((d) => {
+        return !d.title.includes('f**k')
+    }).map((d) => {
+        return {
+            title: d.title,
+            imageUrl: d.images.fixed_height.url
+        }
+    })
+
+    for(let a of data.data)
     {
-        // arrayGif.push({
-        //     title: x[a].title,
-        //     url: x[a].images.fixed_height.url
-        // })
-        arrayGif.push(x[a].images.fixed_height.url)
+        arrayGif.push({
+            title: a['title'],
+            imageUrl: a.images.fixed_height.url
+        })
     }
+    // for(let a in data.data)
+    // {
+    //     // arrayGif.push({
+    //     //     title: x[a].title,
+    //     //     url: x[a].images.fixed_height.url
+    //     // })
+    //     arrayGif.push(x[a].images.fixed_height.url)
+    // }
 
     console.log(arrayGif);
     // let gif = fetch(url);
@@ -54,8 +68,9 @@ app.get('/searchGIF', async (req, res) => {
     res.status(200);
     res.type('text/html');
     res.render('gifdisp', {
-        url: url,
-        gif: arrayGif
+        search: req.query.searchDesc,
+        gif: arrayGif,
+        hasContent: !!arrayGif.length
     })
 })
 
