@@ -26,52 +26,63 @@ app.get('/searchGIF', async (req, res) => {
         lang: 'en'
     })
 
-    let fetchResult = await fetch(url);
-    let data = await fetchResult.json();
-
-    let arrayGif = [];
-
-    //Using Mapping
-    const img = data.data.filter((d) => {
-        return !d.title.includes('f**k')
-    }).map((d) => {
-        return {
-            title: d.title,
-            imageUrl: d.images.fixed_height.url
-        }
-    })
-
-    for(let a of data.data)
+    if(req.query.searchDesc.toLocaleUpperCase() ==='joel')
     {
-        arrayGif.push({
-            title: a['title'],
-            imageUrl: a.images.fixed_height.url
-        })
+        res.status(200);
+        res.type('text/html');
+        res.send(`<h1>Only For you JOEL</h1`);
     }
-    // for(let a in data.data)
-    // {
-    //     // arrayGif.push({
-    //     //     title: x[a].title,
-    //     //     url: x[a].images.fixed_height.url
-    //     // })
-    //     arrayGif.push(x[a].images.fixed_height.url)
-    // }
+    else
+    {
 
-    // console.log(arrayGif);
-    // let gif = fetch(url);
-    // gif.then(result => {
-    //     return result.json();
-    // }).then(data => {
-    //     let x = data;
-    //     console.log(x.data);
-    // })
-    res.status(200);
-    res.type('text/html');
-    res.render('gifdisp', {
-        search: req.query.searchDesc,
-        gif: arrayGif,
-        hasContent: !!arrayGif.length
-    })
+        let fetchResult = await fetch(url);
+        let data = await fetchResult.json();
+
+        let arrayGif = [];
+
+        //Using Mapping
+        const img = data.data.filter((d) => {
+            return !d.title.includes('f**k')
+        }).map((d) => {
+            return {
+                title: d.title,
+                imageUrl: d.images.fixed_height.url
+            }
+        })
+
+        for(let a of data.data)
+        {
+            arrayGif.push({
+                title: a['title'],
+                imageUrl: a.images.fixed_height.url
+            })
+        }
+        // for(let a in data.data)
+        // {
+        //     // arrayGif.push({
+        //     //     title: x[a].title,
+        //     //     url: x[a].images.fixed_height.url
+        //     // })
+        //     arrayGif.push(x[a].images.fixed_height.url)
+        // }
+
+        // console.log(arrayGif);
+        // let gif = fetch(url);
+        // gif.then(result => {
+        //     return result.json();
+        // }).then(data => {
+        //     let x = data;
+        //     console.log(x.data);
+        // })
+        res.status(200);
+        res.type('text/html');
+        res.render('gifdisp', {
+            search: req.query.searchDesc,
+            gif: arrayGif,
+            hasContent: !!arrayGif.length
+        })
+
+    }
 })
 
 app.use(express.static(__dirname + '/public'));
