@@ -57,7 +57,7 @@ app.get('/searchGIF', async (req, res) => {
     //     arrayGif.push(x[a].images.fixed_height.url)
     // }
 
-    console.log(arrayGif);
+    // console.log(arrayGif);
     // let gif = fetch(url);
     // gif.then(result => {
     //     return result.json();
