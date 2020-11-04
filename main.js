@@ -26,7 +26,7 @@ app.get('/searchGIF', async (req, res) => {
         lang: 'en'
     })
 
-    if(req.query.searchDesc.toLocaleUpperCase() ==='joel')
+    if(req.query.searchDesc.toLowerCase() ==='joel')
     {
         res.status(200);
         res.type('text/html');
